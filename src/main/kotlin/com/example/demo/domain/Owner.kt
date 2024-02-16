@@ -1,5 +1,6 @@
 package com.example.demo.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -15,6 +16,7 @@ class Owner {
     var firstname: String? = null
     var lastname: String? = null
 
+    @JsonIgnore
     @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
     var cars: List<Car>? = null
 
