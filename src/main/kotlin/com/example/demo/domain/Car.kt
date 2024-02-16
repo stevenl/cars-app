@@ -14,6 +14,10 @@ class Car {
     var modelYear: Int = 0
     var price: Int = 0
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner")
+    var owner: Owner? = null
+
     constructor()
     constructor(
         brand: String?,
@@ -22,6 +26,7 @@ class Car {
         registrationNumber: String?,
         modelYear: Int,
         price: Int,
+        owner: Owner?,
     ) : super() {
         this.brand = brand
         this.model = model
@@ -29,5 +34,6 @@ class Car {
         this.registrationNumber = registrationNumber
         this.modelYear = modelYear
         this.price = price
+        this.owner = owner
     }
 }

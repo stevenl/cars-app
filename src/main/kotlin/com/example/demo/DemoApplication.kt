@@ -2,16 +2,24 @@ package com.example.demo
 
 import com.example.demo.domain.Car
 import com.example.demo.domain.CarRepository
+import com.example.demo.domain.Owner
+import com.example.demo.domain.OwnerRepository
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import java.util.*
+
 
 @SpringBootApplication
-class DemoApplication(val repository: CarRepository) : CommandLineRunner {
+class DemoApplication(val carRepository: CarRepository, val ownerRepository: OwnerRepository) : CommandLineRunner {
     override fun run(vararg args: String?) {
-        repository.save(
+        val owner1 = Owner("John", "Johnson")
+        val owner2 = Owner("Mary", "Robinson")
+        ownerRepository.saveAll(listOf(owner1, owner2))
+
+        carRepository.save(
             Car(
                 "Ford",
                 "Mustang",
@@ -19,9 +27,10 @@ class DemoApplication(val repository: CarRepository) : CommandLineRunner {
                 "ADF-1121",
                 2023,
                 59000,
+                owner1,
             ),
         )
-        repository.save(
+        carRepository.save(
             Car(
                 "Nissan",
                 "Leaf",
@@ -29,9 +38,10 @@ class DemoApplication(val repository: CarRepository) : CommandLineRunner {
                 "SSJ-3002",
                 2020,
                 29000,
+                owner2,
             ),
         )
-        repository.save(
+        carRepository.save(
             Car(
                 "Toyota",
                 "Prius",
@@ -39,10 +49,11 @@ class DemoApplication(val repository: CarRepository) : CommandLineRunner {
                 "KKO-0212",
                 2022,
                 39000,
+                owner2,
             ),
         )
         // Fetch all cars and log to console
-        for (car in repository.findAll()) {
+        for (car in carRepository.findAll()) {
             logger.info("brand: ${car.brand}, model: ${car.model}")
         }
     }
