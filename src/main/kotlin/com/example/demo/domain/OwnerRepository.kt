@@ -2,4 +2,6 @@ package com.example.demo.domain
 
 import org.springframework.data.repository.CrudRepository
 
-interface OwnerRepository : CrudRepository<Owner, Long>
+interface OwnerRepository : CrudRepository<Owner, Long> {
+    fun findByFirstname(firstname: String): Owner?
+}
