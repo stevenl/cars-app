@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 class SecurityConfig(
     val userDetailsService: UserDetailsService,
     val authenticationFilter: AuthenticationFilter,
+    val exceptionHandler: AuthEntryPoint,
 ) {
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetailsService)
@@ -47,6 +48,13 @@ class SecurityConfig(
                 it.requestMatchers(HttpMethod.POST, "/login").permitAll()
                     //  and requests to all other endpoints require authentication.
                     .anyRequest().authenticated()
-            }.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            }
+            .addFilterBefore(
+                authenticationFilter,
+                UsernamePasswordAuthenticationFilter::class.java
+            )
+            .exceptionHandling {
+                it.authenticationEntryPoint(exceptionHandler)
+            }
             .build()
 }
