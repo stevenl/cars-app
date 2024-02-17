@@ -1,5 +1,6 @@
 package com.example.demo
 
+import com.example.demo.domain.AuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -13,12 +14,16 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(val userDetailsService: UserDetailsService) {
+class SecurityConfig(
+    val userDetailsService: UserDetailsService,
+    val authenticationFilter: AuthenticationFilter,
+) {
     fun configureGlobal(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService<UserDetailsService>(userDetailsService)
+        auth.userDetailsService(userDetailsService)
             .passwordEncoder(passwordEncoder())
     }
 
@@ -42,5 +47,6 @@ class SecurityConfig(val userDetailsService: UserDetailsService) {
                 it.requestMatchers(HttpMethod.POST, "/login").permitAll()
                     //  and requests to all other endpoints require authentication.
                     .anyRequest().authenticated()
-            }.build()
+            }.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .build()
 }
