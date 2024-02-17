@@ -1,19 +1,14 @@
 package com.example.demo
 
-import com.example.demo.domain.Car
-import com.example.demo.domain.CarRepository
-import com.example.demo.domain.Owner
-import com.example.demo.domain.OwnerRepository
+import com.example.demo.domain.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import java.util.*
-
 
 @SpringBootApplication
-class DemoApplication(val carRepository: CarRepository, val ownerRepository: OwnerRepository) : CommandLineRunner {
+class DemoApplication(val carRepository: CarRepository, val ownerRepository: OwnerRepository, val userRepository: AppUserRepository) : CommandLineRunner {
     override fun run(vararg args: String?) {
         val owner1 = Owner("John", "Johnson")
         val owner2 = Owner("Mary", "Robinson")
@@ -56,6 +51,23 @@ class DemoApplication(val carRepository: CarRepository, val ownerRepository: Own
         for (car in carRepository.findAll()) {
             logger.info("brand: ${car.brand}, model: ${car.model}")
         }
+
+        // Username: user, password: user
+        userRepository.save(
+            AppUser(
+                "user",
+                "$2a$10\$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue",
+                "USER"
+            )
+        )
+        // Username: admin, password: admin
+        userRepository.save(
+            AppUser(
+                "admin",
+                "$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW",
+                "ADMIN"
+            )
+        )
     }
 }
 
