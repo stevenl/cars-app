@@ -52,7 +52,10 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 // POST method request to the /login endpoint is allowed without authentication
                 it.requestMatchers(HttpMethod.POST, "/login").permitAll()
-                    //  and requests to all other endpoints require authentication.
+                    // Role-based access
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .requestMatchers("/user/**").hasRole("USER")
+                    // Requests to all other endpoints require authentication
                     .anyRequest().authenticated()
             }
             .addFilterBefore(

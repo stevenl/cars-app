@@ -6,8 +6,10 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 
 @SpringBootApplication
+@EnableMethodSecurity
 class DemoApplication(val carRepository: CarRepository, val ownerRepository: OwnerRepository, val userRepository: AppUserRepository) : CommandLineRunner {
     override fun run(vararg args: String?) {
         val owner1 = Owner("John", "Johnson")
