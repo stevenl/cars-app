@@ -1,12 +1,8 @@
 import {CarResponse} from "../types.ts";
 import {useQuery} from "@tanstack/react-query";
-import axios from "axios";
+import {getCars} from "../api/cars-api.ts";
 
 function CarList() {
-    const getCars = async (): Promise<CarResponse[]> => {
-        const response = await axios.get("http://localhost:8080/api/cars")
-        return response.data._embedded.cars
-    }
     const {data, error, isSuccess} = useQuery({
         queryKey: ["cars"],
         queryFn: getCars,
