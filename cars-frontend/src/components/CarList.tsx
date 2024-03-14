@@ -1,8 +1,11 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
 import {deleteCar, getCars} from "../api/cars-api.ts"
 import {DataGrid, GridCellParams, GridColDef} from "@mui/x-data-grid"
+import {useState} from "react"
+import {Snackbar} from "@mui/material"
 
 function CarList() {
+    const [isShowDeleteNotification, setShowDeleteNotification] = useState(false)
     const queryClient = useQueryClient()
 
     const {data, error, isSuccess} = useQuery({
@@ -12,6 +15,7 @@ function CarList() {
 
     const {mutate} = useMutation(deleteCar, {
         onSuccess: () => {
+            setShowDeleteNotification(true)
             // refresh the page by re-fetching the data
             queryClient.invalidateQueries({queryKey: ['cars']})
         },
@@ -48,12 +52,20 @@ function CarList() {
         return <span>Error when fetching cars...</span>
     }
     return (
-        <DataGrid
-            rows={data}
-            columns={columns}
-            getRowId={row => row._links.self.href}
-            disableRowSelectionOnClick={true}
-        />
+        <>
+            <DataGrid
+                rows={data}
+                columns={columns}
+                getRowId={row => row._links.self.href}
+                disableRowSelectionOnClick={true}
+            />
+            <Snackbar
+                open={isShowDeleteNotification}
+                autoHideDuration={2000}
+                onClose={() => setShowDeleteNotification(false)}
+                message={"Car deleted"}
+            />
+        </>
     )
 }
 
