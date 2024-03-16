@@ -3,6 +3,7 @@ import {deleteCar, getCars} from "../api/cars-api.ts"
 import {DataGrid, GridCellParams, GridColDef} from "@mui/x-data-grid"
 import {useState} from "react"
 import {Snackbar} from "@mui/material"
+import AddCar from "./AddCar.tsx"
 
 function CarList() {
     const [isShowDeleteNotification, setShowDeleteNotification] = useState(false)
@@ -57,6 +58,7 @@ function CarList() {
     }
     return (
         <>
+            <AddCar/>
             <DataGrid
                 rows={data}
                 columns={columns}
