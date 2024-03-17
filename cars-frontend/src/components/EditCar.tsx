@@ -1,6 +1,8 @@
 import {Car, CarResponse} from "../types.ts"
 import {ChangeEvent, useState} from "react"
-import {Button, Dialog, DialogActions, DialogTitle} from "@mui/material"
+import {Button, Dialog, DialogActions, DialogTitle, IconButton} from "@mui/material"
+import EditIcon from "@mui/icons-material/Edit"
+import Tooltip from "@mui/material/Tooltip"
 import CarDialogContent from "./CarDialogContent.tsx"
 import {useMutation, useQueryClient} from "@tanstack/react-query"
 import {updateCar} from "../api/cars-api.ts"
@@ -46,7 +48,11 @@ function EditCar({carData}: FormProps) {
 
     return (
         <>
-            <Button size="small" onClick={handleOpen}>Edit</Button>
+            <Tooltip title={"Edit car"}>
+                <IconButton aria-label={"edit"} size={"small"} onClick={handleOpen}>
+                    <EditIcon fontSize={"small"} />
+                </IconButton>
+            </Tooltip>
 
             <Dialog open={isShowDialog} onClose={handleClose}>
                 <DialogTitle>Edit car</DialogTitle>
