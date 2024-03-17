@@ -1,4 +1,4 @@
-import {Car, CarResponse} from "../types.ts";
+import {Car, CarEntry, CarResponse} from "../types.ts";
 import axios from "axios";
 
 const VITE_API_URL = import.meta.env.VITE_API_URL
@@ -15,6 +15,17 @@ export const addCar = async (car: Car): Promise<CarResponse> => {
                 'Content-Type': "application/json",
             },
         },
+    )
+    return response.data
+}
+
+export const updateCar = async (carEntry: CarEntry): Promise<CarResponse> => {
+    const response = await axios.put(
+        carEntry.url, carEntry.car, {
+            headers: {
+                'Content-Type': "application/json",
+            },
+        }
     )
     return response.data
 }

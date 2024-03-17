@@ -7,6 +7,11 @@ export type Car = {
     price: number
 }
 
+export type CarEntry = {
+    car: Car
+    url: string
+}
+
 export type CarResponse = {
     brand: string
     model: string
