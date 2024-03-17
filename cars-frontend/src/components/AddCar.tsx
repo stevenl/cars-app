@@ -1,6 +1,6 @@
 import {ChangeEvent, useState} from "react"
 import {Car} from "../types.ts"
-import {Dialog, DialogActions, DialogTitle} from "@mui/material"
+import {Button, Dialog, DialogActions, DialogTitle} from "@mui/material"
 import {useMutation, useQueryClient} from "@tanstack/react-query"
 import {addCar} from "../api/cars-api.ts"
 import CarDialogContent from "./CarDialogContent.tsx"
@@ -41,14 +41,14 @@ function AddCar() {
 
     return (
         <>
-            <button onClick={handleOpen}>New car</button>
+            <Button onClick={handleOpen}>New car</Button>
 
             <Dialog open={isShowDialog} onClose={handleClose}>
                 <DialogTitle>New car</DialogTitle>
                 <CarDialogContent car={car} onChange={updateCarState}/>
                 <DialogActions>
-                    <button onClick={handleClose}>Cancel</button>
-                    <button onClick={handleSave}>Save</button>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleSave}>Save</Button>
                 </DialogActions>
             </Dialog>
         </>
