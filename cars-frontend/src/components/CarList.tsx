@@ -1,6 +1,6 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
 import {deleteCar, getCars} from "../api/cars-api.ts"
-import {DataGrid, GridCellParams, GridColDef} from "@mui/x-data-grid"
+import {DataGrid, GridCellParams, GridColDef, GridToolbar} from "@mui/x-data-grid"
 import {useState} from "react"
 import {Snackbar} from "@mui/material"
 import AddCar from "./AddCar.tsx"
@@ -76,6 +76,7 @@ function CarList() {
                 columns={columns}
                 getRowId={row => row._links.self.href}
                 disableRowSelectionOnClick={true}
+                slots={{toolbar: GridToolbar}}
             />
             <Snackbar
                 open={isShowDeleteNotification}
