@@ -2,12 +2,16 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
 import {deleteCar, getCars} from "../api/cars-api.ts"
 import {DataGrid, GridCellParams, GridColDef, GridToolbar} from "@mui/x-data-grid"
 import {useState} from "react"
-import {IconButton, Snackbar} from "@mui/material"
+import {Button, IconButton, Snackbar, Stack} from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import AddCar from "./AddCar.tsx"
 import EditCar from "./EditCar.tsx"
 
-function CarList() {
+type CarListProps = {
+    logout?: () => void,
+}
+
+function CarList({logout}: CarListProps) {
     const [isShowDeleteNotification, setShowDeleteNotification] = useState(false)
     const queryClient = useQueryClient()
 
@@ -71,7 +75,10 @@ function CarList() {
     }
     return (
         <>
-            <AddCar/>
+            <Stack direction="row" alignItems="center" justifyContent="space-between">
+                <AddCar/>
+                <Button onClick={logout}>Log out</Button>
+            </Stack>
             <DataGrid
                 rows={data}
                 columns={columns}

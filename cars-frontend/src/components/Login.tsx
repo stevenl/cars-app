@@ -38,8 +38,13 @@ function Login() {
             .catch(() => setNotification(true))
     }
 
+    const handleLogout = () => {
+        setAuthenticated(false);
+        sessionStorage.setItem("jwt", "");
+    }
+
     if (isAuthenticated) {
-        return <CarList/>
+        return <CarList logout={handleLogout}/>
     }
     return (
         <>
